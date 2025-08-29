@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gam1ngZone — геймерська периферія</title>
+  <!-- prevent indexing -->
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#0b0f17">
+  <link rel="icon" href="assets/logo.jpeg">
+  <link rel="preload" href="assets/placeholder.svg" as="image">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- ====== HEADER ====== -->
+  <header class="header">
+    <div class="container nav">
+      <div class="brand">
+        <img src="assets/logo.jpeg" alt="Gam1ngZone logo">
+        <div>
+          <div class="title">Gam1ngZone</div>
+          <div class="badge">Магазин геймерської периферії</div>
+        </div>
+      </div>
+      <nav class="menu">
+        <a href="#hits">Хіти продажу</a>
+        <a href="#sale">Знижки</a>
+        <a href="#new">Новинки</a>
+        <a href="#contacts">Контакти</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ====== HERO ====== -->
+  <section class="hero">
+    <div class="container">
+      <h1>Периферія для перемог у <span style="text-shadow:0 0 12px #00f5ff;">Gam1ngZone</span></h1>
+      <p>Навушники, клавіатури, миші, килимки, геймпади, мікрофони, кабелі, роутери та інші комплектуючі для ПК. Швидка консультація, чесні ціни, підбір під твій сетап.</p>
+      <div class="cta">
+        <a class="btn" href="https://t.me/labchi_k" target="_blank" rel="noopener">
+          <span>Telegram</span>
+        </a>
+        <a class="btn secondary" href="viber://chat?number=%2B380689655060">
+          <span>Viber</span>
+        </a>
+        <a class="btn" href="tel:+380689655060">
+          <span>+380 68 965 50 60</span>
+        </a>
+        <a class="btn" href="https://prom.ua/ua/c3968831-company.html" target="_blank" rel="noopener">
+          <span>Магазин на Prom</span>
+        </a>
+      </div>
+
+      <!-- Slider -->
+      <div class="slider" aria-label="Акційні банери">
+        <div class="slides">
+          <div class="slide">
+            <h3>Знижки до −30% на периферію</h3>
+            <div class="tag">Акція тижня</div>
+          </div>
+          <div class="slide">
+            <h3>Механічні клавіатури RGB</h3>
+            <div class="tag">Хіт сезону</div>
+          </div>
+          <div class="slide">
+            <h3>Новинки для кіберспортсменів</h3>
+            <div class="tag">У наявності</div>
+          </div>
+        </div>
+        <button class="navbtn prev" aria-label="Попередній">‹</button>
+        <button class="navbtn next" aria-label="Наступний">›</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== SECTIONS ====== -->
+  <section class="section container" id="hits">
+    <h2>Хіти продажу</h2>
+    <div class="grid" id="hits"></div>
+  </section>
+
+  <section class="section container" id="sale">
+    <h2>Знижки</h2>
+    <div class="grid" id="sale"></div>
+  </section>
+
+  <section class="section container" id="new">
+    <h2>Новинки</h2>
+    <div class="grid" id="new"></div>
+  </section>
+
+  <!-- ====== CONTACTS ====== -->
+  <section class="container contacts" id="contacts">
+    <h2>Контакти</h2>
+    <p>Напиши нам у зручний месенджер або подзвони: </p>
+    <div class="cta">
+      <a class="btn" href="https://t.me/labchi_k" target="_blank" rel="noopener"><span>Telegram: @labchi_k</span></a>
+      <a class="btn secondary" href="viber://chat?number=%2B380689655060"><span>Viber: +380 68 965 50 60</span></a>
+      <a class="btn" href="tel:+380689655060"><span>Подзвонити</span></a>
+      <a class="btn" href="https://prom.ua/ua/c3968831-company.html" target="_blank" rel="noopener"><span>Магазин на Prom</span></a>
+    </div>
+    <p style="margin-top:12px;color:#9fb2c8">* Сторінка закрита від індексації пошуковиками (meta robots noindex,nofollow). Для додаткового захисту додай <code>robots.txt</code> на хостингу.</p>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <small>© <span id="year"></span> Gam1ngZone. Всі права захищено.</small>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  <script src="script.js"></script>
+
+  <!-- ===== HOW TO EDIT =====
+  1) Замінити демо-товари — відкрийте script.js → об'єкт 'products'.
+  2) Тексти/кнопки — у index.html (цей файл), пошук по словах.
+  3) Кольори — у styles.css (змінні :root).
+  4) Лого — заміни файл assets/logo.jpeg.
+  5) Хостинг — закинь папку на GitHub Pages або Netlify. 
+  -->
+</body>
+</html>
