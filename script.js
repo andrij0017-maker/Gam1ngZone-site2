@@ -1,4 +1,5 @@
-// ===== Demo products with external images (easy to replace) =====
+
+// Demo products — replace freely
 const products = {
   hits: [
     {title:'Гарнітура Attack Shark L80 Pro', img:'https://images.unsplash.com/photo-1583394838336-acd977736f90?q=80&w=1200&auto=format&fit=crop', price:1899, old:null, tags:['Топ продаж','RGB','Мікрофон'], link:'#'},
@@ -20,10 +21,12 @@ const products = {
   ]
 };
 
-function cardHTML(p){
-  return `
+function mount(id, list){
+  const root = document.getElementById(id);
+  if(!root) return;
+  root.innerHTML = list.map(p => `
     <article class="card">
-      <a class="img" href="${p.link}" target="_blank" rel="noopener">
+      <a class="thumb" href="${p.link}" target="_blank" rel="noopener">
         <img src="${p.img}" alt="${p.title}">
       </a>
       <h3>${p.title}</h3>
@@ -33,20 +36,15 @@ function cardHTML(p){
         <span class="new">${p.price} грн</span>
       </div>
       <div class="actions">
-        <a class="buy" href="${p.link}" target="_blank" rel="noopener">Купити</a>
+        <a class="btn" href="${p.link}" target="_blank" rel="noopener">Детальніше</a>
       </div>
     </article>
-  `;
+  `).join('');
 }
 
-function renderSection(rootId, list){
-  const root = document.getElementById(rootId);
-  if(!root) return;
-  root.innerHTML = list.map(cardHTML).join('');
-}
-
-document.addEventListener('DOMContentLoaded', ()=>{
-  renderSection('hits', products.hits);
-  renderSection('sale', products.sale);
-  renderSection('news', products.news);
+document.addEventListener('DOMContentLoaded', () => {
+  mount('hits-grid', products.hits);
+  mount('sale-grid', products.sale);
+  mount('news-grid', products.news);
+  document.getElementById('year').textContent = new Date().getFullYear();
 });
