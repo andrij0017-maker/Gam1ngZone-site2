@@ -1,3 +1,7 @@
+// === CONFIG ===
+const BOT_TOKEN = "8365299382:AAGYW1vbTxkYH8tppPNA9XAAvudNSfDcot0";
+const CHAT_ID = "8104903132";
+
 // Demo products — replace freely
 const products = {
   hits: [
@@ -20,30 +24,81 @@ const products = {
   ]
 };
 
-function mount(id, list){
-  const root = document.getElementById(id);
-  if(!root) return;
-  root.innerHTML = list.map(p => `
-    <article class="card">
-      <a class="thumb" href="${p.link}" target="_blank" rel="noopener">
-        <img src="${p.img}" alt="${p.title}">
-      </a>
-      <h3>${p.title}</h3>
-      <div class="badges">${(p.tags||[]).map(t=>`<span class="b">${t}</span>`).join('')}</div>
-      <div class="price">
-        ${p.old ? `<span class="old">${p.old} грн</span>` : ''}
-        <span class="new">${p.price} грн</span>
-      </div>
-      <div class="actions">
-        <a class="btn" href="${p.link}" target="_blank" rel="noopener">Детальніше</a>
-      </div>
-    </article>
-  `).join('');
+function cardHTML(p){return `
+  <article class="card" data-title="${p.title.toLowerCase()}">
+    <a class="thumb" href="${p.link}" target="_blank" rel="noopener">
+      <img src="${p.img}" alt="${p.title}">
+    </a>
+    <h3>${p.title}</h3>
+    <div class="badges">${(p.tags||[]).map(t=>`<span class="b">${t}</span>`).join('')}</div>
+    <div class="price">
+      ${p.old ? `<span class="old">${p.old} грн</span>` : ''}
+      <span class="new">${p.price} грн</span>
+    </div>
+    <div class="actions">
+      <a class="btn" href="${p.link}" target="_blank" rel="noopener">Детальніше</a>
+      <button class="btn" data-order="${p.title}">Замовити</button>
+    </div>
+  </article>`;}
+
+function mount(id, list){const root=document.getElementById(id); if(!root) return; root.innerHTML=list.map(cardHTML).join('');}
+
+// Search
+function setupSearch(){
+  const input=document.getElementById('search');
+  const emptyNote=document.getElementById('empty-note');
+  const allCards=()=>Array.from(document.querySelectorAll('.card'));
+  function run(){
+    const q=(input.value||'').trim().toLowerCase();
+    let visible=0;
+    allCards().forEach(c=>{const ok=!q||c.dataset.title.includes(q); c.style.display=ok?'':'none'; if(ok) visible++;});
+    emptyNote.style.display=(visible===0)?'block':'none';
+  }
+  input.addEventListener('input', run);
+  run();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  mount('hits-grid', products.hits);
-  mount('sale-grid', products.sale);
-  mount('news-grid', products.news);
-  document.getElementById('year').textContent = new Date().getFullYear();
+// Modal + Telegram
+function setupOrder(){
+  const modal=document.getElementById('order-modal');
+  const form=document.getElementById('order-form');
+  const productField=document.getElementById('order-product');
+  const nameField=document.getElementById('order-name');
+  const phoneField=document.getElementById('order-phone');
+  const noteField=document.getElementById('order-note');
+  const closeBtn=document.getElementById('order-close');
+
+  document.body.addEventListener('click',(e)=>{
+    const t=e.target; if(t.matches('button[data-order]')){{productField.value=t.getAttribute('data-order'); modal.classList.add('open');}}
+  });
+  closeBtn.addEventListener('click',()=>modal.classList.remove('open'));
+  modal.addEventListener('click',(e)=>{if(e.target===modal) modal.classList.remove('open');});
+
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const text=[
+      "🛒 НОВЕ ЗАМОВЛЕННЯ",
+      `📦 Товар: ${productField.value}`,
+      `👤 Ім'я: ${nameField.value}`,
+      `📞 Телефон: ${phoneField.value}`,
+      noteField.value?`💬 Коментар: ${noteField.value}`:null
+    ].filter(Boolean).join('\n');
+
+    const params=new URLSearchParams(); params.append('chat_id', CHAT_ID); params.append('text', text);
+
+    try{const res=await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{{method:'POST',headers:{{'Content-Type':'application/x-www-form-urlencoded'}},body:params.toString()}});
+      if(!res.ok) throw new Error('Network');
+      alert('✅ Замовлення відправлено! Ми скоро з вами звʼяжемось.');
+      modal.classList.remove('open'); form.reset();
+    }catch(err){alert('❌ Помилка відправки. Спробуйте ще раз або напишіть у Telegram.');}
+  });
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  mount('hits-grid',products.hits);
+  mount('sale-grid',products.sale);
+  mount('news-grid',products.news);
+  document.getElementById('year').textContent=new Date().getFullYear();
+  setupSearch();
+  setupOrder();
 });

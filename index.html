@@ -32,6 +32,11 @@
     <div class="container wrap">
       <h1>Периферія для перемог у <span style="text-shadow:0 0 12px #00f5ff;">Gam1ngZone</span></h1>
       <p>Навушники, клавіатури, миші, килимки, геймпади, мікрофони, кабелі, роутери та інші комплектуючі. Швидка консультація і підбір під твій сетап.</p>
+      <div class="searchbar">
+        <input id="search" type="search" placeholder="Пошук товарів (наприклад: клавіатура, Razer, кабель)…">
+        <button type="button" onclick="document.getElementById('search').value='';document.getElementById('search').dispatchEvent(new Event('input'));">Очистити</button>
+      </div>
+      <div id="empty-note" class="badge-muted">Нічого не знайдено. Спробуйте інший запит.</div>
     </div>
   </section>
 
@@ -53,34 +58,42 @@
   <footer class="footer" id="contacts">
     <div class="container">
       <div class="contact-row">
-        <a class="cbtn" href="https://t.me/labchi_k" target="_blank" rel="noopener">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9.04 13.52l-.14 3.9c.2 0 .29-.09.39-.2l1.86-1.77 3.86 2.83c.71.39 1.22.19 1.41-.66l2.56-12.01c.23-1.06-.4-1.48-1.09-1.22L3.2 9.35c-1.04.4-1.02.98-.18 1.23l3.9 1.22 9.06-5.72c.43-.26.83-.12.51.14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          Telegram: @labchi_k
-        </a>
-        <a class="cbtn" href="viber://chat?number=%2B380689655060">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 3h12a3 3 0 013 3v10a3 3 0 01-3 3h-5l-3.5 2.5c-.66.47-1.5-.02-1.5-.82V19H6a3 3 0 01-3-3V6a3 3 0 013-3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          Viber: +380 68 965 50 60
-        </a>
-        <a class="cbtn" href="tel:+380689655060">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22 16.92v2a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.3 19.3 0 01-6-6A19.8 19.8 0 012.08 4.2 2 2 0 014.06 2h2a2 2 0 012 1.72c.12.9.33 1.77.62 2.6a2 2 0 01-.45 2.11L7.1 9.88a16 16 0 006 6l1.45-1.15a2 2 0 012.11-.45c.83.29 1.7.5 2.6.62A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          Телефон: +380 68 965 50 60
-        </a>
-        <a class="cbtn" href="https://prom.ua/ua/c3968831-company.html" target="_blank" rel="noopener">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 3h18v4H3zM3 10h18v11H3z" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
-          Магазин на Prom
-        </a>
+        <a class="cbtn" href="https://t.me/labchi_k" target="_blank" rel="noopener">Telegram: @labchi_k</a>
+        <a class="cbtn" href="viber://chat?number=%2B380689655060">Viber: +380 68 965 50 60</a>
+        <a class="cbtn" href="tel:+380689655060">Телефон: +380 68 965 50 60</a>
       </div>
       <small>© <span id="year"></span> Gam1ngZone. Всі права захищено.</small>
     </div>
   </footer>
+
+  <!-- Order Modal -->
+  <div class="modal" id="order-modal" aria-hidden="true">
+    <div class="modal-card">
+      <h3>Оформлення замовлення</h3>
+      <form id="order-form">
+        <div class="form-row">
+          <label>Товар</label>
+          <input class="input" id="order-product" type="text" readonly>
+        </div>
+        <div class="form-row">
+          <label>Імʼя</label>
+          <input class="input" id="order-name" type="text" required>
+        </div>
+        <div class="form-row">
+          <label>Телефон</label>
+          <input class="input" id="order-phone" type="tel" required>
+        </div>
+        <div class="form-row">
+          <label>Коментар (необовʼязково)</label>
+          <textarea class="input" id="order-note" rows="3" placeholder="Зручний час дзвінка, місто, НП тощо"></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn" id="order-close">Скасувати</button>
+          <button type="submit" class="btn">Відправити</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
